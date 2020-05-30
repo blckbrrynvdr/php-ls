@@ -1,1 +1,1 @@
-# php-ls
+# Учебный проект Loftschool по курсу PHP
