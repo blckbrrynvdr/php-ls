@@ -1,5 +1,7 @@
 <?php
-	if (1 == 1) {
-		echo 'hi';
-	}
-?>
+
+$user_name = "Igor";
+
+if (trim($user_name)) {
+    echo 'hi';
+}
