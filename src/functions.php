@@ -2,12 +2,12 @@
 /*
  * Допустимые параметры для функции calcEverything
  */
-define('AVAILABLE_MATH_ACTIONS', ['*', '-', '+', '/'], true);
+define('AVAILABLE_MATH_ACTIONS', ['*', '-', '+', '/']);
 
 /*
  * Допустимое число байт при чтении файла
  */
-define('PRINT_FILE_MAX_LENGTH', 1024, true);
+define('PRINT_FILE_MAX_LENGTH', 1024);
 
 /*
  * Задача 1
@@ -127,4 +127,24 @@ function readAndPrintFile(string $filename)
 
     echo $str;
     return true;
+}
+
+/*
+ * Функция записи текста в файл
+ * @param string $filename имя файла
+ * @param string $text текст
+ * @return bool результат выполнения
+ */
+function writeFile(string $filename, string $text): bool {
+    if (!trim($filename)) {
+        trigger_error('Не задано имя файла');
+        return false;
+    }
+    if (!trim($text)) {
+        trigger_error('Не задан текст');
+        return false;
+    }
+    $file = fopen($filename, 'w');
+    return fwrite($file, $text) ? true : false;
+
 }

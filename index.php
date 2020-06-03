@@ -49,8 +49,6 @@ echo '<br><hr><br>';
 
 //Task six
 $filename = 'test.txt';
-$text = 'Hello again!';
-$file = fopen($filename, 'w');
-$writeStatus = fwrite($file, $text) ? true : false;
+writeFile($filename,'Hello again! And again');
 
 readAndPrintFile($filename);
