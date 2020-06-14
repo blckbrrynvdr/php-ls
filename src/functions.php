@@ -20,15 +20,14 @@ const NAMES = [
 
 /*
  * Функция создаёт массив с случайным именем и возрастом
- * @return array
+ * @return $user
  */
 function createUser(): array
 {
-    $user = [
+    return [
         'name' => NAMES[array_rand(NAMES)],
         'age' => mt_rand(18, 45),
     ];
-    return $user;
 }
 
 /*
@@ -37,10 +36,9 @@ function createUser(): array
  * @param array  $data     - массив данных
  * @return bool - статус работы функции
  */
-function createJSONFile(string $filename, array $data): bool
+function createJsonFile(string $filename, array $data): bool
 {
-    $result = file_put_contents($filename, json_encode($data));
-    return $result;
+    return file_put_contents($filename, json_encode($data));
 }
 
 /*
@@ -48,7 +46,7 @@ function createJSONFile(string $filename, array $data): bool
  * @param string $filename - имя файла
  * @return array
  */
-function readJSONToArray(string $filename): array
+function readJsonToArray(string $filename): array
 {
     $result = [];
     if ($file = file_get_contents($filename)) {

@@ -9,12 +9,12 @@ for ($i = 0; $i < 50; $i++) {
 echo '<pre>';
 
 
-$createJSONStatus = createJSONFile($filename, $users);
+$createJSONStatus = createJsonFile($filename, $users);
 
 
 
-$readedUsers = readJSONToArray($filename);
-//var_dump($readedUsers);
+$readedUsers = readJsonToArray($filename);
+
 
 echo 'Колличество имён в массиве: <br>';
 $names = getKeysCount($readedUsers, 'name');
