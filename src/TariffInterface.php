@@ -5,4 +5,5 @@ interface TariffInterface
     public function addService(ServiceInterface $service): self;
     public function getMinutes(): int;
     public function getDistance(): int;
+    public function getName():string;
 }
