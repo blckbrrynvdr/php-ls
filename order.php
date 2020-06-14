@@ -2,15 +2,14 @@
 include 'src/config.php';
 include 'src/class.db.php';
 include 'src/class.burger.php';
-include 'src/functions.php';
 
 use Order\Burger;
 
 
-$burger = new Burger();
 
 $email = $_POST['email'];
 $name = $_POST['name'];
+$error = '';
 
 $addressFields = ['street', 'home', 'part', 'appt', 'floor'];
 $address = '';
@@ -19,6 +18,23 @@ foreach ($_POST as $field => $value) {
         $address .= $value.',';
     }
 }
+
+if (!trim($email)) {
+    $error .= 'Не указан email!<br>';
+}
+if (!trim($name)) {
+    $error .= 'Не указано имя!<br>';
+}
+if (!trim($address)) {
+    $error .= 'Мы не знаем куда везти, так что съедим сами. Спасибо!<br>';
+}
+
+if (!trim($error)) {
+    echo $error;
+    die;
+}
+
+$burger = new Burger();
 
 $data = ['address' => $address];
 
