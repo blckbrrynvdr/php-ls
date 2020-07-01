@@ -1,0 +1,18 @@
+{{ title }}<br><br>
+
+
+<form action="/mail/send" method="post">
+    <label>
+        <div>Будьте добры адрес почтовый куда отправим депешу</div>
+        <input type="email" name="mail_to" maxlength="50" value="{{ user.email }}" placeholder="деревню@дедушке.на">
+    </label><br><br>
+    <label>
+        <div>О чем поведать желаете, сударь. Какова тема?</div>
+        <input type="text" name="mail_subject" maxlength="50" placeholder="Указъ царя">
+    </label><br><br>
+    <label>
+        <div>И сообщеньице приложить не забудьте, сударь!</div>
+        <textarea name="mail_body" cols="30" rows="10" placeholder="Крестьянам теслу, барину ладу весту"></textarea>
+    </label><br><br>
+    <button>Послать гонца</button>
+</form>

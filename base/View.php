@@ -1,10 +1,14 @@
 <?php
 namespace Base;
 
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
 class View
 {
     private $templatePath;
     private $data;
+    private $twig;
 
     public function __construct()
     {
@@ -31,6 +35,16 @@ class View
         include $this->templatePath . '/' . $tpl;
         $data = ob_get_clean();
         return $data;
+    }
+
+    public function renderTwig($tpl, $data = [])
+    {
+        if (!$this->twig) {
+            $loader = new FilesystemLoader($this->templatePath);
+            $this->twig = new Environment($loader);
+        }
+
+        return $this->twig->render($tpl, $data);
     }
 
 }

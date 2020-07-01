@@ -177,6 +177,15 @@ class User
     }
 
     /**
+     * Получить почту пользователя
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
      * Получить пароль пользователя
      * @return mixed
      */
