@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Хост:                         127.0.0.1
--- Версия сервера:               8.0.15 - MySQL Community Server - GPL
+-- Версия сервера:               5.7.25 - MySQL Community Server (GPL)
 -- Операционная система:         Win64
 -- HeidiSQL Версия:              11.0.0.5919
 -- --------------------------------------------------------
@@ -34,17 +34,22 @@ CREATE TABLE IF NOT EXISTS `logs` (
 CREATE TABLE IF NOT EXISTS `messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `author_id` int(11) NOT NULL,
-  `image` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `text` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы mvc.messages: ~2 rows (приблизительно)
+-- Дамп данных таблицы mvc.messages: ~8 rows (приблизительно)
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
 INSERT INTO `messages` (`id`, `author_id`, `image`, `created_at`, `text`) VALUES
-	(2, 1, '339d5ffc985edcf4361c4c03b58f8347c80df2cf.jpg', '2020-06-24 23:59:57', '!!!!!!!! УРА Я ОДМЕН'),
-	(8, 1, '', '2020-06-25 00:16:31', 'dg sdfh zsh dh dfhg');
+	(1, 7, NULL, '2020-07-04 21:31:49', '543'),
+	(2, 7, 'E:\\OpenServer\\tmp\\OSPanel\\userdata\\temp\\php8046.tmp', '2020-07-04 21:33:27', 'bfdx h dxhjxd '),
+	(3, 7, '7493f5443a79b3a44e139c61073a122fd9ec47af.jpg', '2020-07-04 21:37:32', 'b63 hhrfm n'),
+	(4, 1, NULL, '2020-07-04 22:44:06', 'dgsd hs hs ghshd s'),
+	(5, 1, NULL, '2020-07-04 22:44:09', 'dfgs hs yhas zhz '),
+	(6, 1, NULL, '2020-07-04 22:44:21', 'dgs sdhg sdazh sejhn '),
+	(8, 1, NULL, '2020-07-04 22:45:29', 'ds ghsd hash ah adsa g');
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
 
 -- Дамп структуры для таблица mvc.users
@@ -54,17 +59,18 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created_at` datetime NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `image` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_idx` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы mvc.users: ~3 rows (приблизительно)
+-- Дамп данных таблицы mvc.users: ~5 rows (приблизительно)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `name`, `created_at`, `email`, `password`) VALUES
-	(1, 'odmen', '2020-06-24 23:46:46', 'odmen@odmen.odmen', 'bf465db9e7f00067627b28cc216bc2a3b10d0667'),
-	(2, 'test1', '2020-06-24 12:54:36', 'test1@test.ru', 'bf465db9e7f00067627b28cc216bc2a3b10d0667'),
-	(3, 'Лолкек', '2020-06-24 13:09:27', 'lolkek@kek.ru', 'd353e76c8f27abd68e70bbb1da4eaa8d762f1d47'),
-	(6, '12421', '2020-06-24 23:47:45', '1@2.3', '4f646cc51cb6ae734e2423539e3fc9b1a1c4a5a6');
+INSERT INTO `users` (`id`, `name`, `created_at`, `email`, `password`, `image`) VALUES
+	(1, 'odmen', '2020-06-24 23:46:46', 'odmen@odmen.odmen', 'bf465db9e7f00067627b28cc216bc2a3b10d0667', '64f2332cb2eb24f0425c3120de401471a5e8fe97.jpg'),
+	(2, 'test1234', '2020-06-24 12:54:36', 'test1234@test.ru', 'bf465db9e7f00067627b28cc216bc2a3b10d0667', '4ef9a5fc675d7c45170a4924813179c39a87b06a.jpg'),
+	(3, 'Лолкек', '2020-06-24 13:09:27', 'lolkek@kek.ru', 'd353e76c8f27abd68e70bbb1da4eaa8d762f1d47', NULL),
+	(8, '423151223', '2020-07-05 00:13:24', '55215@fdsg.ty', 'Qwerty123', NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
