@@ -1,8 +1,10 @@
 <?php
-/** @var $message \App\Model\Message */
-/** @var $user \App\Model\User */
+/** @var $message \App\Model\Eloquent\Message */
+/** @var $user \App\Model\Eloquent\User */
+/** @var Illuminate\Database\Eloquent\Collection $messages */
 $user = $this->user;
 ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
     .message { margin: 5px 0 0 5px; border: 1px solid grey; width: 450px; min-height: 100px;}
     .author { margin-left: 10px; }
@@ -13,35 +15,21 @@ $user = $this->user;
 </style>
 
 <div class="user">
-    <span><?= $user->getName()?></span>
+    <span><?= $user->getName()?> #<?=$user->getId()?></span>
 <a href="/blog/logout/">Выйти</a><br>
 </div>
 <hr>
-<h2>Список сообщений:</h2>
 
-<?php if($messages = $this->messages): ?>
-    <?php foreach ($messages as $message): ?>
-        <div class="message">
-            <? if($user->isAdmin()): ?>
-                <div class="admin">
-                    <a href="/admin/deleteMessage/?id=<?=$message->getId();?>">Удалить</a>
-                </div>
-            <? endif; ?>
-            <span class="date"><?=$message->getCreatedAt();?> </span>
-            <? if($author = $message->getAuthor()):?>
-                <span class="author"><?=htmlspecialchars($author->getName());?></span>
-            <? else: ?>
-                <span class="author">Сообщение от удаленного пользователя</span>
-            <? endif; ?>
-            <div class="text"><?=htmlspecialchars(nl2br($message->getText()));?></div>
-            <? if($message->getImage()):?>
-                <div><img src="/images/<?=$message->getImage();?>" style="width: 150px;"></div>
-            <? endif;?>
-        </div>
-    <?php endforeach; ?>
-<?php else: ?>
-<h3>Сообщений пока нет</h3>
-<?php endif; ?>
+
+<?php $messages = $this->messages; ?>
+
+<h2>Список сообщений:</h2>
+<div class="messages" id="messages">
+    <?php include 'messageList.phtml'; ?>
+</div>
+
+<input type="button" onclick="loadMessages(<?= (int) $this->last_id?>)" value="Показать ещё">
+
 <hr>
 Добавить сообщение
 <form enctype="multipart/form-data" action="/blog/addMessage" method="post">
@@ -49,3 +37,17 @@ $user = $this->user;
     Изображение: <input type="file" name="image"><br>
     <input type="submit" value="Отправить">
 </form>
+
+<script>
+    function loadMessages(lastId) {
+        $.get(
+            '/blog/loadList/?last_id=' + lastId,
+            {},
+            function (r) {
+                var html = $('#messages').html();
+                var newHtml = html + r;
+                $('#messages').html(newHtml);
+            }
+        );
+    }
+</script>

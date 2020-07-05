@@ -3,6 +3,11 @@ namespace App\Model;
 
 use Base\Db;
 
+/**
+ * Class User
+ * @package App\Model
+ * @deprecated
+ */
 class User
 {
     private $id;
@@ -19,28 +24,6 @@ class User
         $this->email = $data['email'];
     }
 
-
-    /**
-     * Получить пользователя по Email
-     * @param string $email
-     * @return User|null
-     */
-    public static function getByEmail(string $email)
-    {
-        $db = Db::getInstance();
-        $data = $db->fetchOne(
-            "SELECT * fROM users WHERE email = :email",
-            __METHOD__,
-            [':email' => $email]
-        );
-        if (!$data) {
-            return null;
-        }
-
-        $user = new self($data);
-        $user->id = $data['id'];
-        return $user;
-    }
 
     /**
      * Получить пользователей по id
@@ -100,24 +83,6 @@ class User
         $this->id = $db->lastInsertId();
 
         return $res;
-    }
-
-    /**
-     * Получить пользователя по id
-     * @param int $id
-     * @return User|null
-     */
-    public static function getById(int $id): ?self
-    {
-        $db = Db::getInstance();
-        $data = $db->fetchOne("SELECT * fROM users WHERE id = :id", __METHOD__, [':id' => $id]);
-        if (!$data) {
-            return null;
-        }
-
-        $user = new self($data);
-        $user->id = $id;
-        return $user;
     }
 
 

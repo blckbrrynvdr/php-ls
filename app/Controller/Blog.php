@@ -1,41 +1,60 @@
 <?php
 namespace App\Controller;
 
-use App\Model\Message;
-use App\Model\User;
+use App\Model\Eloquent\Message;
+use App\Model\Eloquent\User;
 use Base\AbstractController;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class Blog extends AbstractController
 {
-    public function index()
+
+    public function preDispatch()
     {
+        parent::preDispatch();
+
         if (!$this->getUser()) {
             $this->redirect('/login');
         }
-        $messages = Message::getList();
-        if ($messages) {
-            $userIds = array_map(function (Message $message) {
-                return $message->getAuthorId();
-            }, $messages);
-            $users = \App\Model\User::getByIds($userIds);
-            array_walk($messages, function (Message $message) use ($users) {
-                if (isset($users[$message->getAuthorId()])) {
-                    $message->setAuthor($users[$message->getAuthorId()]);
-                }
-            });
-        }
+    }
+
+    public function index()
+    {
+
+        $messages = Message::with('author')
+            ->orderBy('id','desc')
+            ->limit(MESSAGES_PER_PAGE)
+            ->get();
+
         return $this->view->render('blog.phtml', [
             'messages' => $messages,
+            'last_id' => $messages->last()->id,
+            'user' => $this->getUser()
+        ]);
+    }
+
+    public function loadList()
+    {
+
+        $lastId = (int) ($_GET['last_id'] ?? 0);
+        if(!$lastId) {
+            $lastId = 0;
+        }
+        $messages = Message::with('author')
+            ->where('id', '<', $lastId)
+            ->orderBy('id','desc')
+            ->limit(MESSAGES_PER_PAGE)
+            ->get();
+
+        return $this->view->render('messageList.phtml', [
+            'messages' => $messages,
+            'last_id' => $messages->last()->id,
             'user' => $this->getUser()
         ]);
     }
 
     public function addMessage()
     {
-        if (!$this->getUser()) {
-            $this->redirect('/login');
-        }
 
         $text = (string) $_POST['text'];
 
@@ -49,9 +68,9 @@ class Blog extends AbstractController
             'created_at' => date('Y-m-d H:i:s')
         ]);
 
-        if (isset($_FILES['image']['tmp_name'])) {
+        if (isset($_FILES['image']['tmp_name']) && trim($_FILES['image']['tmp_name'])) {
             $message->loadFile($_FILES['image']['tmp_name']);
-            $img = Image::make('images/'.$message->getImage());
+            $img = Image::make('images/'.$message->image);
 
             $img->resize(200, null, function (\Intervention\Image\Constraint $constraint) {
                $constraint->aspectRatio();
@@ -68,7 +87,7 @@ class Blog extends AbstractController
                 }
             );
 
-            $img->save('images/'.$message->getImage());
+            $img->save('images/'.$message->image);
         }
 
         $message->save();

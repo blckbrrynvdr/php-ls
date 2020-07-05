@@ -1,0 +1,38 @@
+<?php
+/** @var $message \App\Model\Eloquent\Message */
+/** @var $user \App\Model\Eloquent\User */
+/** @var Illuminate\Database\Eloquent\Collection $messages */
+
+$user = $this->user;
+$messages = $this->messages; ?>
+<?php if (!$messages->isEmpty()): ?>
+    <?php foreach ($messages as $message): ?>
+        <div class="message">
+            <? if ($user->isAdmin()): ?>
+                <div class="admin">
+                    <a href="/admin/deleteMessage/?id=<?= $message->id; ?>">Удалить сообщение</a>
+                </div>
+            <? endif; ?>
+            <span class="date"><?= $message->created_at; ?> </span>
+            <? if ($author = $message->author): ?>
+                <a <?= $user->isAdmin() ? 'href="/admin/editUser/?user_id=' . $author->getId() . '"' : '' ?>
+                        class="author"
+                        title="редактировать пользователя">
+                    <?= htmlspecialchars($author->getName()); ?>
+                </a>
+                <span style="display: inline-block;width: 20px;height: 20px;vertical-align: middle;">
+                        <img style="max-width: 100%" src="avatars/<?= $author->getImage() ?>" alt="">
+                    </span>
+            <? else: ?>
+                <span class="author">Сообщение от удаленного пользователя</span>
+            <? endif; ?>
+            <div class="text"><?= htmlspecialchars(nl2br($message->text)); ?></div>
+            <? if ($message->image): ?>
+                <div><img src="/images/<?= $message->image ?>" style="width: 150px;"></div>
+            <? endif; ?>
+        </div>
+    <?php endforeach; ?>
+<?php else: ?>
+    <h3>Сообщений пока нет</h3>
+<?php endif; ?>
+

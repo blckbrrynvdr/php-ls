@@ -6,7 +6,6 @@ use Base\AbstractController;
 use Swift_Mailer;
 use Swift_SmtpTransport;
 use Swift_Message;
-use App\Model\User;
 
 class Mail extends AbstractController
 {

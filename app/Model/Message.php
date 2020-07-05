@@ -3,6 +3,11 @@ namespace App\Model;
 
 use Base\Db;
 
+/**
+ * Class Message
+ * @package App\Model
+ * @deprecated
+ */
 class Message
 {
     private $id;
@@ -158,7 +163,7 @@ class Message
      * Получить автора сообщения
      * @return User
      */
-    public function getAuthor(): User
+    public function getAuthor(): ?User
     {
         return $this->author;
     }

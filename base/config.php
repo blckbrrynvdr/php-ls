@@ -10,6 +10,8 @@ const DB_PASSWORD = '';
  * Массив ID пользователей с админ правами
  */
 const ADMIN_IDS = [1];
+
+const MESSAGES_PER_PAGE = 5;
 /*
  * Данные почты
  */

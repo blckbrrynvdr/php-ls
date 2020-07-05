@@ -1,0 +1,46 @@
+<?php
+/** @var \App\Model\Eloquent\User $user */
+$user = $this->user;
+?>
+<style>
+    .photo {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    .user__photo {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid #c7ffcc;
+        margin-right: 30px;
+    }
+    .user__photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+</style>
+<a href="/users">Назад к списку пользователей</a><br><br>
+<form enctype="multipart/form-data" action="/admin/userSave/?user_id=<?= $user->getId()?>" method="post">
+    <label>
+        <div>Имя пользоваеля</div>
+        <input type="text" name="userName" value="<?=$user->getName()?>">
+    </label><br><br>
+    <label>
+        <div>Email пользоваеля</div>
+        <input type="text" name="userNewEmail" value="<?=$user->getEmail()?>">
+    </label><br><br>
+    <label>
+        <div>Фото пользователя</div>
+        <div class="user__photo"><img src="/avatars/<?=$user->image?>" alt="фото пользователя <?=$user->getName()?>"></div><br>
+        <input type="file" name="image" value="<?=$user->image?>">
+    </label>
+
+    <br>
+    <br>
+    <input type="submit" value="Сохранить изменения">
+</form>

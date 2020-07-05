@@ -2,7 +2,9 @@
   "require": {
     "twig/twig": "^2.0",
     "swiftmailer/swiftmailer": "^6.0",
-    "intervention/image": "^2.5"
+    "intervention/image": "^2.5",
+    "illuminate/events": "^7.18",
+    "illuminate/database": "^7.18"
   },
   "autoload": {
     "psr-4": {"App\\": "app/", "Base\\": "base/"}

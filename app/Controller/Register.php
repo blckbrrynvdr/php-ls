@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use Base\AbstractController;
-use App\Model\User;
+use App\Model\Eloquent\User;
 
 class Register extends AbstractController
 {
@@ -31,7 +31,11 @@ class Register extends AbstractController
         }
 
         if (mb_strlen($password) < 5) {
-            return 'Пароль слишком короткий';
+            return 'Пароль слишком короткий (нужно более 5 символов!)';
+        }
+
+        if ($user = User::getByEmail($email)) {
+            return 'Пользователь с таким email уже существует';
         }
 
         $userData = [
