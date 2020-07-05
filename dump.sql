@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы mvc.messages: ~8 rows (приблизительно)
+-- Дамп данных таблицы mvc.messages: ~7 rows (приблизительно)
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
 INSERT INTO `messages` (`id`, `author_id`, `image`, `created_at`, `text`) VALUES
 	(1, 7, NULL, '2020-07-04 21:31:49', '543'),
@@ -64,13 +64,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `email_idx` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы mvc.users: ~5 rows (приблизительно)
+-- Дамп данных таблицы mvc.users: ~4 rows (приблизительно)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `created_at`, `email`, `password`, `image`) VALUES
 	(1, 'odmen', '2020-06-24 23:46:46', 'odmen@odmen.odmen', 'bf465db9e7f00067627b28cc216bc2a3b10d0667', '64f2332cb2eb24f0425c3120de401471a5e8fe97.jpg'),
 	(2, 'test1234', '2020-06-24 12:54:36', 'test1234@test.ru', 'bf465db9e7f00067627b28cc216bc2a3b10d0667', '4ef9a5fc675d7c45170a4924813179c39a87b06a.jpg'),
 	(3, 'Лолкек', '2020-06-24 13:09:27', 'lolkek@kek.ru', 'd353e76c8f27abd68e70bbb1da4eaa8d762f1d47', NULL),
-	(8, '423151223', '2020-07-05 00:13:24', '55215@fdsg.ty', 'Qwerty123', NULL);
+	(8, '423151223', '2020-07-05 00:13:24', '55215@fdsg.ty', 'Qwerty123', NULL),
+	(11, 'Олег', '2020-07-05 09:58:24', 'Олег', 'Олег1', '6b458ebdb11dfdc9122085ba2006c28b88e96095.jpg'),
+	(12, 'Павел', '2020-07-05 10:00:21', 'Павел', 'Павел', '32249dcb2e5d428073d11cc854414044bc529145.jpg'),
+	(13, 'Ольга', '2020-07-05 10:01:35', 'Ольга', 'Ольга', '6c486647395e820fb930e05b5925f7b887cdf481.jpg');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

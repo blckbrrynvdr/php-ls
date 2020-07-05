@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use Base\AbstractController;
 use App\Model\Eloquent\User;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class Register extends AbstractController
 {
@@ -46,6 +47,19 @@ class Register extends AbstractController
         ];
 
         $user = new User($userData);
+
+        if (isset($_FILES['image']['tmp_name']) && trim($_FILES['image']['tmp_name'])) {
+            $user->loadFile($_FILES['image']['tmp_name']);
+            $img = Image::make('avatars/'.$user->image);
+
+            $img->resize(100, null, function (\Intervention\Image\Constraint $constraint) {
+                $constraint->aspectRatio();
+            });
+
+
+            $img->save('images/'.$user->image);
+        }
+
         $user->save();
 
         $this->session->authUser($user->getId());

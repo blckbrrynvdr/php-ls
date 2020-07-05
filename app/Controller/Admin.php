@@ -74,4 +74,63 @@ class Admin extends AbstractController
         $user->save();
         $this->redirect('/users');
     }
+
+    public function addUser()
+    {
+        return $this->view->render('admin/addUser.phtml');
+    }
+
+    public function createUser()
+    {
+        $name = (string) $_POST['name'];
+        $email = (string) $_POST['email'];
+        $password = (string) $_POST['password'];
+        $password_confirm = (string) $_POST['password_confirm'];
+
+        if (!trim($name) || !trim($password)) {
+            return 'Не заданы имя и пароль';
+        }
+
+        if (!trim($email)) {
+            return 'Не задан email';
+        }
+
+        if ($password !== $password_confirm) {
+            return 'Введенные пароли не совпадают';
+        }
+
+        if (mb_strlen($password) < 5) {
+            return 'Пароль слишком короткий (нужно более 5 символов!)';
+        }
+
+        if ($user = User::getByEmail($email)) {
+            return 'Пользователь с таким email уже существует';
+        }
+
+        $userData = [
+            'name' => $name,
+            'created_at' => date('Y-m-d H:i:s'),
+            'password' => $password,
+            'email' => $email,
+        ];
+
+
+        $user = new User($userData);
+
+        if (isset($_FILES['image']['tmp_name']) && trim($_FILES['image']['tmp_name'])) {
+            $user->loadFile($_FILES['image']['tmp_name']);
+            $img = Image::make('avatars/'.$user->image);
+
+            $img->resize(100, null, function (\Intervention\Image\Constraint $constraint) {
+                $constraint->aspectRatio();
+            });
+
+
+            $img->save('images/'.$user->image);
+        }
+
+        $user->save();
+
+        $this->redirect('/users');
+    }
 }

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><?=$this->title;?></title>
+    <style>
+        .block { display: inline-block; vertical-align: top; text-align: left; }
+        .block input { width: 150px; }
+        .field { width: 150px; display: inline-block; margin-bottom: 5px }
+    </style>
+</head>
+<body>
+<div class="block">
+    <h3>Добавить пользователя</h3>
+    <form enctype="multipart/form-data" action="/admin/createUser" method="post">
+        <div class="field">Login:</div> <input type="text" value="" name="name"><br>
+        <div class="field">Email:</div> <input type="text" value="" name="email"><br>
+        <div class="field">Password:</div> <input type="text" value="" name="password"><br>
+        <div class="field">Confirm Password:</div> <input type="text" value="" name="password_confirm"><br>
+        <label>
+            <div>Фото пользователя</div>
+            <input type="file" name="image" value="">
+        </label><br><br>
+        <input type="submit" value="Зарегистрироваться">
+    </form>
+</div>
+
+</body>
+</html>
